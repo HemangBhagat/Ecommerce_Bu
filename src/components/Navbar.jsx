@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import Profilepic from '../components/Profilepic';
 import SearchFiled from '../components/SearchFiled';
-import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { searchSuggText } from '../utils/functions';
 import {
   Box,
@@ -17,15 +17,21 @@ import {
   PopoverContent,
   PopoverBody,
   Text,
+  List,
+  ListItem,
 } from '@chakra-ui/react';
 import { ProductListContext } from '../screens/HomePage';
+import { FaShoppingCart } from 'react-icons/fa';
 
 const Links = ['Mobiles', 'Laptop'];
+
+const test = ['abcdefg', 'hello', 'hemag bhagat'];
 
 const NavLink = props => {
   const { children } = props;
   return (
     <Box
+      padding="50px"
       as="a"
       px={2}
       py={1}
@@ -50,6 +56,7 @@ export default function WithAction() {
 
   return (
     <>
+      {console.log('HELLO')}
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
@@ -60,7 +67,9 @@ export default function WithAction() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
+            <Box bg="gray" height="50px" width="80px">
+              Logo
+            </Box>
             <HStack
               as={'nav'}
               spacing={6}
@@ -71,15 +80,13 @@ export default function WithAction() {
               ))}
             </HStack>
           </HStack>
-          <Box width={350}>
+          <Box width={400} bg="white" borderRadius="12px">
             <Popover placement="bottom-end">
               <PopoverTrigger>
-                <Box>
-                  <SearchFiled
-                    setResults={setResults}
-                    searchProduct={searchProduct}
-                  ></SearchFiled>
-                </Box>
+                <SearchFiled
+                  setResults={setResults}
+                  searchProduct={searchProduct}
+                />
               </PopoverTrigger>
               <PopoverContent w="100">
                 <PopoverBody maxH={300} overflowY="scroll">
@@ -88,17 +95,9 @@ export default function WithAction() {
               </PopoverContent>
             </Popover>
           </Box>
-          <Flex alignItems={'center'}>
-            <IconButton
-              variant="none"
-              colorScheme="teal"
-              aria-label="Call Sage"
-              fontSize="20px"
-              icon={<AddIcon />}
-            />
-          </Flex>
-          <Flex alignItems={'center'}>
-            <Profilepic></Profilepic>
+          <Flex alignItems={'center'} gap="20px">
+            <FaShoppingCart color="#3182ce" size="1.5rem" />
+            <Profilepic />
           </Flex>
         </Flex>
 
