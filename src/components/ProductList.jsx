@@ -4,6 +4,7 @@ import SearchFiled from './SearchFiled';
 import { getProducts } from '../utils/functions';
 import {
   Box,
+  HStack,
   Popover,
   PopoverBody,
   PopoverContent,
@@ -22,28 +23,13 @@ function ProductList() {
 
   console.log(searchProduct);
   return (
-    <Box>
-      <Box>
-        <Popover placement="bottom-end">
-          <PopoverTrigger>
-            <Box>
-              <SearchFiled> </SearchFiled>
-            </Box>
-          </PopoverTrigger>
-          <PopoverContent w="100">
-            <PopoverBody>
-              Are you sure you want to have that milkshake?
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
-      </Box>
-
-      <SimpleGrid columns={2} spacing={10}>
+    <HStack w="100%" alignItems={'center'}>
+      <SimpleGrid columns={[2, null, 3]} spacing="40px">
         {searchProduct.map(product => {
           return <ProductCard product={product} />;
         })}
       </SimpleGrid>
-    </Box>
+    </HStack>
   );
 }
 

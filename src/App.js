@@ -12,13 +12,10 @@ import {
 } from '@chakra-ui/react';
 import HomePage from './screens/HomePage';
 
-
-
 function App() {
   return (
-    
     <ChakraProvider theme={theme}>
-      <HomePage/>
+      <HomePage />
     </ChakraProvider>
   );
 }

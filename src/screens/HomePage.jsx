@@ -1,12 +1,14 @@
 import React from 'react';
-import { Button, ButtonGroup } from '@chakra-ui/react';
+import { Button, ButtonGroup, Container } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import ProductList from '../components/ProductList';
 function HomePage() {
   return (
     <div>
       <Navbar />
-      <ProductList></ProductList>
+      <Container>
+        <ProductList></ProductList>
+      </Container>
     </div>
   );
 }

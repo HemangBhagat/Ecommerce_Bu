@@ -2,7 +2,6 @@
 import Profilepic from '../components/Profilepic';
 import SearchFiled from '../components/SearchFiled';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
-import ProductCard from './ProductCard';
 import {
   Box,
   Flex,
@@ -20,6 +19,10 @@ import {
   useColorModeValue,
   Stack,
   Card,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
 } from '@chakra-ui/react';
 
 const Links = ['Mobiles', 'Laptop'];
@@ -70,7 +73,16 @@ export default function WithAction() {
             </HStack>
           </HStack>
           <Box width={350}>
-            <SearchFiled> </SearchFiled>
+            <Popover placement="bottom-end">
+              <PopoverTrigger>
+                <Box>
+                  <SearchFiled> </SearchFiled>
+                </Box>
+              </PopoverTrigger>
+              <PopoverContent w="100">
+                <PopoverBody maxH={300} overflowY="scroll"></PopoverBody>
+              </PopoverContent>
+            </Popover>
           </Box>
           <Flex alignItems={'center'}>
             <IconButton
