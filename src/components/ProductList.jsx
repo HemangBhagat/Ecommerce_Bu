@@ -1,32 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ProductCard from './ProductCard';
-import SearchFiled from './SearchFiled';
 import { getProducts } from '../utils/functions';
-import {
-  Box,
-  HStack,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  SimpleGrid,
-} from '@chakra-ui/react';
+import { HStack, SimpleGrid } from '@chakra-ui/react';
+import { ProductListContext } from '../screens/HomePage';
 function ProductList() {
-  const [searchProduct, setSearchProduct] = React.useState([]);
+  const { searchProduct, setSearchProduct } = useContext(ProductListContext);
 
   React.useEffect(() => {
     (async function () {
       let result = await getProducts();
       setSearchProduct(result.data);
+      // majorProductList = result.data;
+      // console.log(majorProductList);
     })();
   }, [setSearchProduct]);
 
-  console.log(searchProduct);
   return (
     <HStack w="100%" alignItems={'center'}>
       <SimpleGrid columns={[2, null, 3]} spacing="40px">
-        {searchProduct.map(product => {
-          return <ProductCard product={product} />;
+        {searchProduct.map((product, id) => {
+          return <ProductCard key={id} product={product} />;
         })}
       </SimpleGrid>
     </HStack>

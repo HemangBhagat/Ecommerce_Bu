@@ -1,29 +1,24 @@
 'use client';
+import React, { useContext } from 'react';
 import Profilepic from '../components/Profilepic';
 import SearchFiled from '../components/SearchFiled';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { searchSuggText } from '../utils/functions';
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
-  Text,
   IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
-  Card,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
+  Text,
 } from '@chakra-ui/react';
+import { ProductListContext } from '../screens/HomePage';
 
 const Links = ['Mobiles', 'Laptop'];
 
@@ -47,6 +42,10 @@ const NavLink = props => {
 };
 
 export default function WithAction() {
+  const [results, setResults] = React.useState([]);
+
+  const { searchProduct, setSearchProduct } = useContext(ProductListContext);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -76,11 +75,16 @@ export default function WithAction() {
             <Popover placement="bottom-end">
               <PopoverTrigger>
                 <Box>
-                  <SearchFiled> </SearchFiled>
+                  <SearchFiled
+                    setResults={setResults}
+                    searchProduct={searchProduct}
+                  ></SearchFiled>
                 </Box>
               </PopoverTrigger>
               <PopoverContent w="100">
-                <PopoverBody maxH={300} overflowY="scroll"></PopoverBody>
+                <PopoverBody maxH={300} overflowY="scroll">
+                  {searchSuggText(results)}
+                </PopoverBody>
               </PopoverContent>
             </Popover>
           </Box>

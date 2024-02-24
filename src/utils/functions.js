@@ -1,3 +1,4 @@
+import { Text } from '@chakra-ui/react';
 import axios from 'axios';
 
 export function searchData() {
@@ -8,4 +9,10 @@ export async function getProducts() {
     'https://hemangbhagat.github.io/product_api/product.json'
   );
   return products;
+}
+export function searchSuggText(results) {
+  results.map((prod, id) => {
+    console.log('product Title: ' + prod.title);
+    return <Text key={id}>{prod.title}</Text>;
+  });
 }
