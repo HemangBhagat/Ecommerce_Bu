@@ -8,19 +8,25 @@ function FilterGroups() {
   const { searchProduct, setSearchProduct } = useContext(ProductListContext);
 
   const setAscending = () => {
-    console.log(searchProduct);
+    // console.log(searchProduct);
 
-    const filterData = searchProduct.sort().reverse()
+    const filterData = searchProduct.sort(
+      (a, b) => parseInt(a.price) - parseInt(b.price)
+    );
+    console.log(filterData);
 
-    setResults(filterData)
+    setResults(filterData);
   };
 
   const setDescending = () => {
     console.log(searchProduct);
 
-    const filterData = searchProduct.sort().reverse()
-
-    setResults(filterData)
+    const filterData = searchProduct.sort(
+        (a, b) => parseInt(a.price) - parseInt(b.price)
+      ).reverse();
+      console.log(filterData);
+  
+      setResults(filterData);
   };
 
   return (
