@@ -1,9 +1,9 @@
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Profilepic from '../components/Profilepic';
 import SearchFiled from '../components/SearchFiled';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { searchSuggText } from '../utils/functions';
+import { displaySearchSuggText } from '../utils/functions';
 import {
   Box,
   Flex,
@@ -18,11 +18,15 @@ import {
   PopoverBody,
   Text,
 } from '@chakra-ui/react';
-import { ProductListContext } from '../screens/HomePage';
+import {
+  ProductListContext,
+  ProductListContextCopy,
+} from '../screens/HomePage';
 import { FaShoppingCart } from 'react-icons/fa';
 
 const Links = ['Mobiles', 'Laptop'];
 
+const test = ['abcdefg', 'hello', 'hemag bhagat'];
 
 const NavLink = props => {
   const { children } = props;
@@ -45,60 +49,16 @@ const NavLink = props => {
 };
 
 export default function WithAction() {
-  const [results, setResults] = React.useState([]);
-
-  // const [suggVisible, setSuggVisible] = React.useState(false);
-
   const { searchProduct, setSearchProduct } = useContext(ProductListContext);
+  const { searchCProductCopy, setSearchProductCopy } = useContext(
+    ProductListContextCopy
+  );
 
   const {
     isOpen: isIconOpen,
     onOpen: onIconOpen,
     onClose: onIconClose,
   } = useDisclosure();
-
-  const {
-    isOpen: isPopOpen,
-    onOpen: onPopOpen,
-    onClose: onPopClose,
-  } = useDisclosure();
-
-  const popoverRef = React.useRef(null);
-
-  const handleInputClick = () => {
-    console.log('in handleInputClick Before(isPopOpen)' + isPopOpen);
-    onPopOpen();
-    console.log('in handleInputClick After(isPopOpen)' + isPopOpen);
-  };
-
-  //checks if popoverRef.current is not null or undefined, indicating a valid reference to the popover element in the DOM.
-
-  //!popoverRef.current.contains(event.target): Checks if the click target (event.target) is not within the popover element or any of its children.
-  //contains is a method that checks if an element is contained within another element's DOM tree.
-  const handleOutsideClick = event => {
-    if (
-      popoverRef.current &&
-      !popoverRef.current.contains(event.target) &&
-      isPopOpen
-    ) {
-      console.log('in handleOutsideClick Before(isPopOpen)' + isPopOpen);
-      onPopClose();
-      console.log('in handleOutsideClick After(isPopOpen)' + isPopOpen);
-    }
-  };
-
-  //document.addEventListener('click', handleOutsideClick);: Adds a click event listener to the entire document.
-  //When a click occurs anywhere on the page, the handleOutsideClick function will be called.
-
-  //return () => document.removeEventListener('click', handleOutsideClick);:
-  //This part returns a cleanup function that will be executed when the component unmounts or the suggVisible state variable changes.
-
-  //It removes the click event listener to prevent memory leaks or unexpected behavior.
-  React.useEffect(() => {
-    console.log('IN USEEFFECT');
-    document.addEventListener('click', handleOutsideClick);
-    return () => document.removeEventListener('click', handleOutsideClick);
-  }, [isPopOpen]);
 
   return (
     <>
@@ -125,26 +85,36 @@ export default function WithAction() {
               ))}
             </HStack>
           </HStack>
-          <Box width={400} bg="white" borderRadius="12px" ref={popoverRef}>
-            <Popover placement="bottom-end" isPopOpen={isPopOpen}>
-              <Box>
-                <PopoverTrigger>
-                  <Box>
-                    <SearchFiled
-                      handleInputClick={handleInputClick}
-                      setResults={setResults}
-                      searchProduct={searchProduct}
-                    />
-                  </Box>
-                </PopoverTrigger>
-              </Box>
-              <PopoverContent w="100">
-                <Text>Hi testing this...</Text>
-                <PopoverBody maxH={300} overflowY="scroll">
-                  {searchSuggText(results)}
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
+          <Box
+            width={400}
+            id="searchBarWithResults"
+            bg="white"
+            borderRadius="12px"
+            position="relative"
+          >
+            {/* searchbar */}
+            <Box className="searchInput">
+              <SearchFiled
+                setSearchProduct={setSearchProduct}
+                searchCProductCopy={searchCProductCopy}
+              ></SearchFiled>
+            </Box>
+
+            {/* results */}
+
+            <Box
+              className="searchResults"
+              position="absolute"
+              top="100%"
+              left="0"
+              right="0"
+              zIndex="30"
+              background="white"
+              height="100px"
+              overflowY="scroll"
+            >
+              <Box>{displaySearchSuggText(searchProduct)}</Box>
+            </Box>
           </Box>
           <Flex alignItems={'center'} gap="20px">
             <FaShoppingCart color="#3182ce" size="1.5rem" />

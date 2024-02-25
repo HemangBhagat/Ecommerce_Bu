@@ -2,11 +2,19 @@ import React, { useContext } from 'react';
 import ProductCard from './ProductCard';
 import { getProducts } from '../utils/functions';
 import { HStack, SimpleGrid, Stack, Text } from '@chakra-ui/react';
-import { ProductListContext } from '../screens/HomePage';
+import {
+  ProductListContext,
+  ProductListContextCopy,
+} from '../screens/HomePage';
+
 import FilterGroups from './FilterGroups';
 import ColorFilter from './ColorFilter';
 function ProductList() {
   const { searchProduct, setSearchProduct } = useContext(ProductListContext);
+
+  const { searchCProductCopy, setSearchProductCopy } = useContext(
+    ProductListContextCopy
+  );
   const [results, setResults] = React.useState([]);
 
   React.useEffect(() => {
@@ -14,6 +22,7 @@ function ProductList() {
       let result = await getProducts();
       setResults(result.data);
       setSearchProduct(result.data);
+      setSearchProductCopy(result.data);
       console.log('in useEffect xx');
     })();
   }, [setSearchProduct]);

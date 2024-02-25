@@ -19,14 +19,15 @@ function ProductCard({ product }) {
   return (
     <Card marginTop="10px">
       <CardBody>
-        <Container bg="red">
-          <Image
-            src={product.images}
-            alt={product.title}
-            borderRadius="lg"
-            maxH="250px"
-          />
-        </Container>
+        <Image
+          width="100%"
+          objectFit="contain"
+          src={product.images}
+          alt={product.title}
+          borderRadius="lg"
+          maxH="250px"
+        />
+
         <Stack mt="6" spacing="3">
           <Heading size="md">{product.title}</Heading>
           <HStack>

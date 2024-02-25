@@ -8,18 +8,16 @@ import {
 } from '@chakra-ui/react';
 
 function SearchFiled({
-  handleInputClick,
-  setResults,
-  searchProduct,
+  handleFocus,
+  setSearchProduct,
+  searchCProductCopy,
+  setResult,
+  handleBlur,
 }) {
   const inputRef = React.useRef(null);
 
-  const handleClick = () => {
-    handleInputClick();
-  };
-
   function filterSearch(value) {
-    const res = searchProduct.filter(item => {
+    const res = searchCProductCopy.filter(item => {
       return (
         value &&
         item &&
@@ -27,7 +25,11 @@ function SearchFiled({
         item.title.toLowerCase().includes(value.toLowerCase())
       );
     });
-    setResults(res);
+    if (res.length !== 0) {
+      setSearchProduct(res);
+    } else {
+      setSearchProduct(searchCProductCopy);
+    }
   }
 
   return (
@@ -39,12 +41,14 @@ function SearchFiled({
 
         <Input
           ref={inputRef}
-          onClick={handleClick}
           type="text"
           placeholder="Search..."
           onChange={e => {
             filterSearch(e.target.value);
+            // handleClick();
           }}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       </InputGroup>
     </Stack>
