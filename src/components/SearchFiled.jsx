@@ -12,7 +12,6 @@ function SearchFiled({
   handleFocus,
   setSearchProduct,
   searchCProductCopy,
-  setResult,
   handleBlur,
 }) {
   const inputRef = React.useRef(null);
