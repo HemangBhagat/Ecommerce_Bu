@@ -21,7 +21,6 @@ function ProductCard({ product }) {
       <CardBody>
         <Container bg="red">
           <Image
-            align="center"
             src={product.images}
             alt={product.title}
             borderRadius="lg"

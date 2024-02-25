@@ -3,8 +3,6 @@ import { Menu, MenuItem, MenuButton, MenuList, Button } from '@chakra-ui/react';
 import { ProductListContext } from '../screens/HomePage';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 function FilterGroups() {
-  const [results, setResults] = React.useState([]);
-
   const { searchProduct, setSearchProduct } = useContext(ProductListContext);
 
   const setAscending = () => {
@@ -13,20 +11,23 @@ function FilterGroups() {
     const filterData = searchProduct.sort(
       (a, b) => parseInt(a.price) - parseInt(b.price)
     );
-    console.log(filterData);
+    setSearchProduct(filterData);
 
-    setResults(filterData);
+    searchProduct.map(prod => {
+      console.log(prod);
+    });
   };
 
   const setDescending = () => {
-    console.log(searchProduct);
+    const filterData = searchProduct
+      .sort((a, b) => parseInt(a.price) - parseInt(b.price))
+      .reverse();
 
-    const filterData = searchProduct.sort(
-        (a, b) => parseInt(a.price) - parseInt(b.price)
-      ).reverse();
-      console.log(filterData);
-  
-      setResults(filterData);
+    setSearchProduct(filterData);
+
+    searchProduct.map(prod => {
+      console.log(prod);
+    });
   };
 
   return (

@@ -11,7 +11,7 @@ function ProductList() {
       let result = await getProducts();
       setSearchProduct(result.data);
       // majorProductList = result.data;
-      // console.log(majorProductList);
+      console.log('in useEffect');
     })();
   }, [setSearchProduct]);
 

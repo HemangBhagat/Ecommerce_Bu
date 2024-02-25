@@ -50,21 +50,69 @@ const NavLink = props => {
 export default function WithAction() {
   const [results, setResults] = React.useState([]);
 
+  // const [suggVisible, setSuggVisible] = React.useState(false);
+
   const { searchProduct, setSearchProduct } = useContext(ProductListContext);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isIconOpen,
+    onOpen: onIconOpen,
+    onClose: onIconClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isPopOpen,
+    onOpen: onPopOpen,
+    onClose: onPopClose,
+  } = useDisclosure();
+
+  const popoverRef = React.useRef(null);
+
+  const handleInputClick = () => {
+    console.log('in handleInputClick Before(isPopOpen)' + isPopOpen);
+    onPopOpen();
+    console.log('in handleInputClick After(isPopOpen)' + isPopOpen);
+  };
+
+  //checks if popoverRef.current is not null or undefined, indicating a valid reference to the popover element in the DOM.
+
+  //!popoverRef.current.contains(event.target): Checks if the click target (event.target) is not within the popover element or any of its children.
+  //contains is a method that checks if an element is contained within another element's DOM tree.
+  const handleOutsideClick = event => {
+    if (
+      popoverRef.current &&
+      !popoverRef.current.contains(event.target) &&
+      isPopOpen
+    ) {
+      console.log('in handleOutsideClick Before(isPopOpen)' + isPopOpen);
+      onPopClose();
+      console.log('in handleOutsideClick After(isPopOpen)' + isPopOpen);
+    }
+  };
+
+  //document.addEventListener('click', handleOutsideClick);: Adds a click event listener to the entire document.
+  //When a click occurs anywhere on the page, the handleOutsideClick function will be called.
+
+  //return () => document.removeEventListener('click', handleOutsideClick);:
+  //This part returns a cleanup function that will be executed when the component unmounts or the suggVisible state variable changes.
+
+  //It removes the click event listener to prevent memory leaks or unexpected behavior.
+  React.useEffect(() => {
+    console.log('IN USEEFFECT');
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [isPopOpen]);
 
   return (
     <>
-      {console.log('HELLO')}
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            icon={isIconOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
+            onClick={isIconOpen ? onIconClose : onIconOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
             <Box bg="gray" height="50px" width="80px">
@@ -80,15 +128,21 @@ export default function WithAction() {
               ))}
             </HStack>
           </HStack>
-          <Box width={400} bg="white" borderRadius="12px">
-            <Popover placement="bottom-end">
-              <PopoverTrigger>
-                <SearchFiled
-                  setResults={setResults}
-                  searchProduct={searchProduct}
-                />
-              </PopoverTrigger>
+          <Box width={400} bg="white" borderRadius="12px" ref={popoverRef}>
+            <Popover placement="bottom-end" isPopOpen={isPopOpen}>
+              <Box>
+                <PopoverTrigger>
+                  <Box>
+                    <SearchFiled
+                      handleInputClick={handleInputClick}
+                      setResults={setResults}
+                      searchProduct={searchProduct}
+                    />
+                  </Box>
+                </PopoverTrigger>
+              </Box>
               <PopoverContent w="100">
+                <Text>Hi testing this...</Text>
                 <PopoverBody maxH={300} overflowY="scroll">
                   {searchSuggText(results)}
                 </PopoverBody>
@@ -101,7 +155,7 @@ export default function WithAction() {
           </Flex>
         </Flex>
 
-        {isOpen ? (
+        {isIconOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map(link => (
