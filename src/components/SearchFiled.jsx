@@ -5,7 +5,6 @@ import {
   InputGroup,
   Input,
   InputRightElement,
-  Box,
 } from '@chakra-ui/react';
 
 function SearchFiled({

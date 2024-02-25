@@ -17,15 +17,12 @@ import {
   PopoverContent,
   PopoverBody,
   Text,
-  List,
-  ListItem,
 } from '@chakra-ui/react';
 import { ProductListContext } from '../screens/HomePage';
 import { FaShoppingCart } from 'react-icons/fa';
 
 const Links = ['Mobiles', 'Laptop'];
 
-const test = ['abcdefg', 'hello', 'hemag bhagat'];
 
 const NavLink = props => {
   const { children } = props;

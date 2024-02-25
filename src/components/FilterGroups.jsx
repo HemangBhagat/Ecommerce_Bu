@@ -1,43 +1,47 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Menu, MenuItem, MenuButton, MenuList, Button } from '@chakra-ui/react';
-import { ProductListContext } from '../screens/HomePage';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-function FilterGroups() {
-  const { searchProduct, setSearchProduct } = useContext(ProductListContext);
 
-  const setAscending = () => {
-    // console.log(searchProduct);
+function FilterGroups({ setResults, searchProduct }) {
+  console.log('XXX', searchProduct);
 
-    const filterData = searchProduct.sort(
-      (a, b) => parseInt(a.price) - parseInt(b.price)
-    );
-    setSearchProduct(filterData);
+  const handleSortByPrice = order => {
+    // Copy the products array to avoid mutating the original data
+    const sortedProducts = [...searchProduct];
 
-    searchProduct.map(prod => {
-      console.log(prod);
+    // Sort the products based on the price
+    searchProduct.sort((a, b) => {
+      const priceA = parseInt(a.price);
+      const priceB = parseInt(b.price);
+
+      if (order === 'asc') {
+        return priceA - priceB;
+      } else {
+        return priceB - priceA;
+      }
     });
-  };
 
-  const setDescending = () => {
-    const filterData = searchProduct
-      .sort((a, b) => parseInt(a.price) - parseInt(b.price))
-      .reverse();
-
-    setSearchProduct(filterData);
-
-    searchProduct.map(prod => {
-      console.log(prod);
-    });
+    // Update the results using the prop function
+    setResults(sortedProducts);
   };
 
   return (
     <Menu padding="10px">
-      <MenuButton as={Button} rightIcon={<ChevronDownIcon />} marginTop="10px">
-        Filter
+      <MenuButton
+        as={Button}
+        rightIcon={<ChevronDownIcon />}
+        marginTop="10px"
+        width="100px"
+      >
+        Price
       </MenuButton>
       <MenuList>
-        <MenuItem onClick={setDescending}>Price: High to Low</MenuItem>
-        <MenuItem onClick={setAscending}>Price: Low to High</MenuItem>
+        <MenuItem onClick={() => handleSortByPrice('desc')}>
+          High to Low
+        </MenuItem>
+        <MenuItem onClick={() => handleSortByPrice('asc')}>
+          Low to High
+        </MenuItem>
       </MenuList>
     </Menu>
   );
