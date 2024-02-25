@@ -10,7 +10,7 @@ export async function getProducts() {
   );
   return products;
 }
-export function searchSuggText(results) {
+export function displaySearchSuggText(results) {
   let tmp = results.map((prod, id) => {
     console.log('product Title: ' + prod.title);
     return <Text key={id}>{prod.title}</Text>;
