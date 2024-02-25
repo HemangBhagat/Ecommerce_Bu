@@ -2,15 +2,15 @@ import React from 'react';
 import { Menu, MenuItem, MenuButton, MenuList, Button } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-function FilterGroups({ setResults, searchProduct }) {
-  console.log('XXX', searchProduct);
+function FilterGroups({ setSearchProduct, searchCProductCopy }) {
+  console.log('XXX', searchCProductCopy);
 
   const handleSortByPrice = order => {
     // Copy the products array to avoid mutating the original data
-    const sortedProducts = [...searchProduct];
+    const sortedProducts = [...searchCProductCopy];
 
     // Sort the products based on the price
-    searchProduct.sort((a, b) => {
+    searchCProductCopy.sort((a, b) => {
       const priceA = parseInt(a.price);
       const priceB = parseInt(b.price);
 
@@ -22,7 +22,7 @@ function FilterGroups({ setResults, searchProduct }) {
     });
 
     // Update the results using the prop function
-    setResults(sortedProducts);
+    setSearchProduct(sortedProducts);
   };
 
   return (

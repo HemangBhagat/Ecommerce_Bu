@@ -10,8 +10,8 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-function ColorFilter({ setResults, searchProduct }) {
-  console.log('XXX', searchProduct);
+function ColorFilter({ setSearchProduct, searchCProductCopy }) {
+  console.log('XXX', searchCProductCopy);
 
   //Gets a list of all available colors in data
   const getColors = () => {
@@ -20,7 +20,7 @@ function ColorFilter({ setResults, searchProduct }) {
     const allColors = new Set();
 
     //go through the data and check if the color is in ur list of [allColors]. If not, append to the list
-    searchProduct.forEach(product => {
+    searchCProductCopy.forEach(product => {
       allColors.add(product.color);
     });
 
@@ -37,14 +37,14 @@ function ColorFilter({ setResults, searchProduct }) {
 
     // Filter products based on the selected color
     if (color === 'all') {
-      setResults(searchProduct);
+      setSearchProduct(searchCProductCopy);
     } else {
-      const filteredResults = searchProduct.filter(
+      const filteredResults = searchCProductCopy.filter(
         product => product.color === color
       );
 
       // Update the results using the prop function
-      setResults(filteredResults);
+      setSearchProduct(filteredResults);
     }
   };
 

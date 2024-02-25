@@ -34,7 +34,7 @@ function ProductList() {
   const handleFilterChange = filteredResults => {
     // Update the state with the filtered results
 
-    setResults(filteredResults);
+    setSearchProduct(filteredResults);
     console.log('Filtered Results: ', results);
   };
 
@@ -43,17 +43,19 @@ function ProductList() {
       <HStack align="center">
         <Text>Filter By:</Text>
         <FilterGroups
-          setResults={handleFilterChange}
-          searchProduct={searchProduct}
+          // setResults={}
+          // searchProduct={searchProduct}
+          setSearchProduct={handleFilterChange}
+          searchCProductCopy={searchCProductCopy}
         />
         <ColorFilter
-          setResults={handleFilterChange}
-          searchProduct={searchProduct}
+          setSearchProduct={handleFilterChange}
+          searchCProductCopy={searchCProductCopy}
         />
       </HStack>
       <HStack w="100%" alignItems={'center'}>
         <SimpleGrid columns={[2, null, 3]} spacing="40px">
-          {results.map((product, id) => {
+          {searchProduct.map((product, id) => {
             console.log(product);
             return <ProductCard key={id} product={product} />;
           })}
