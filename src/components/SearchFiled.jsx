@@ -8,16 +8,13 @@ import {
   Box,
 } from '@chakra-ui/react';
 
-function SearchFiled({
-  handleInputClick,
-  setResults,
-  searchProduct,
-}) {
+function SearchFiled({ handleFocus, setResults, searchProduct, handleBlur }) {
   const inputRef = React.useRef(null);
 
-  const handleClick = () => {
-    handleInputClick();
-  };
+  // const handleClick = () => {
+  //   console.log('Inside HandleClick');
+  //   handleInputClick();
+  // };
 
   function filterSearch(value) {
     const res = searchProduct.filter(item => {
@@ -40,12 +37,14 @@ function SearchFiled({
 
         <Input
           ref={inputRef}
-          onClick={handleClick}
           type="text"
           placeholder="Search..."
           onChange={e => {
             filterSearch(e.target.value);
+            // handleClick();
           }}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       </InputGroup>
     </Stack>

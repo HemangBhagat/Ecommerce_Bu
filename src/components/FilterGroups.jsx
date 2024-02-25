@@ -11,11 +11,8 @@ function FilterGroups() {
     const filterData = searchProduct.sort(
       (a, b) => parseInt(a.price) - parseInt(b.price)
     );
+    console.log("Updating state variable", filterData)
     setSearchProduct(filterData);
-
-    searchProduct.map(prod => {
-      console.log(prod);
-    });
   };
 
   const setDescending = () => {
@@ -24,10 +21,6 @@ function FilterGroups() {
       .reverse();
 
     setSearchProduct(filterData);
-
-    searchProduct.map(prod => {
-      console.log(prod);
-    });
   };
 
   return (
